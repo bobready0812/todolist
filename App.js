@@ -10,6 +10,7 @@
 import React, { useEffect, useState } from 'react';
 import type {Node} from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -84,8 +85,26 @@ const App: () => Node = () => {
   const loadToDos = async() => {
     const s= await AsyncStorage.getItem(STORAGE_KEY);
     setToDos(JSON.parse(s));
-  };
+  };  
+ 
+  const deleteToDo = (key) => {
+    console.log(key);
+    Alert.alert("Delete", "Sure?", [
+    {text:"No"},
+    { 
+      text:"Yes",
+      onPress: () => {
+        const newToDos = {...toDos}
+        delete newToDos[key];
+        setToDos(newToDos);
+        saveToDos(newToDos);
+
+      }, 
+    },
+    ]);
+    return;
   
+  }
 
   const addToDo = async() => {
     if(text === "") {
@@ -122,8 +141,11 @@ const App: () => Node = () => {
           Object.keys(toDos).map((key) => 
           toDos[key].working === working ? (<View style={styles.toDo} key={key}>
             <Text style={styles.toDoText}>{toDos[key].text}</Text>
+            <TouchableOpacity onPress={() => deleteToDo(key)}>
+              <Text>❌</Text>
+            </TouchableOpacity>
           </View>
-          ) : null
+          )  : null
           )}</ScrollView>
      </View>
    </View>
@@ -161,6 +183,9 @@ toDo: {
   paddingVertical:15,
   paddingHorizontal: 20,
   borderRadius:15,
+  flexDirection: "row",
+  alignItems:"center",
+  justifyContent:"space-between",
 },
 toDoText: {
   color:"white",
