@@ -9,6 +9,7 @@
  import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import type {Node} from 'react';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {
   Alert,
   SafeAreaView,
@@ -81,7 +82,7 @@ const App: () => Node = () => {
     checkWorking();
   });
 
-
+  const [isDone, setIsDone] = useState(false);
   const [loadWork, setLoadWork] = useState({});
   const [working, setWorking] = useState(true);
   const [text, setText] = useState("");
@@ -140,7 +141,7 @@ const App: () => Node = () => {
     if(text === "") {
       return;
     } 
-    const newToDos = {...toDos, [Date.now()]: {text, working}};
+    const newToDos = {...toDos, [Date.now()]: {text, working, }};
     setToDos(newToDos); 
     await saveToDos(newToDos);
     setText("");
@@ -170,6 +171,7 @@ const App: () => Node = () => {
         <ScrollView>{
           Object.keys(toDos).map((key) => 
           toDos[key].working === working ? (<View style={styles.toDo} key={key}>
+            <BouncyCheckbox size={20} fillColor="#339933" iconStyle={{borderColor : "#339933"}} unfillColor="#FFF"></BouncyCheckbox>
             <Text style={styles.toDoText}>{toDos[key].text}</Text>
             <TouchableOpacity onPress={() => deleteToDo(key)}>
               <Text>❌</Text>
@@ -221,6 +223,7 @@ toDoText: {
   color:"white",
   fontSize: 16,
   fontWeight: "500",
+  marginRight:130
 }
 });
 
