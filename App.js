@@ -141,11 +141,19 @@ const App: () => Node = () => {
     if(text === "") {
       return;
     } 
-    const newToDos = {...toDos, [Date.now()]: {text, working, }};
+    const newToDos = {...toDos, [Date.now()]: {text, working, isDone}};
     setToDos(newToDos); 
     await saveToDos(newToDos);
     setText("");
   };
+
+  const changeIsDone = () => {
+    if(isDone === false) {
+      setIsDone(true);
+    } else {
+      setIsDone(false);
+    }
+  }
 
   return (
   
@@ -171,7 +179,7 @@ const App: () => Node = () => {
         <ScrollView>{
           Object.keys(toDos).map((key) => 
           toDos[key].working === working ? (<View style={styles.toDo} key={key}>
-            <BouncyCheckbox size={20} fillColor="#339933" iconStyle={{borderColor : "#339933"}} unfillColor="#FFF"></BouncyCheckbox>
+            <BouncyCheckbox size={20} fillColor="#339933" iconStyle={{borderColor : "#339933"}} unfillColor="#FFF" ></BouncyCheckbox>
             <Text style={styles.toDoText}>{toDos[key].text}</Text>
             <TouchableOpacity onPress={() => deleteToDo(key)}>
               <Text>❌</Text>
@@ -211,6 +219,16 @@ input: {
 },
 toDo: {
   backgroundColor:theme.toDoBg,
+  marginBottom:10,
+  paddingVertical:15,
+  paddingHorizontal: 20,
+  borderRadius:15,
+  flexDirection: "row",
+  alignItems:"center",
+  justifyContent:"space-between",
+},
+toDo2: {
+  backgroundColor:"#222222",
   marginBottom:10,
   paddingVertical:15,
   paddingHorizontal: 20,
