@@ -63,19 +63,34 @@ const STORAGE_KEY = "@toDos"
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
+
+
+  
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   useEffect(() => {
     loadToDos();
+    setCheck();
+    
   }, []);
 
+
+  useEffect(() => {
+    checkWorking();
+  });
+
+
+  const [loadWork, setLoadWork] = useState({});
   const [working, setWorking] = useState(true);
   const [text, setText] = useState("");
   const [toDos, setToDos] = useState({});
   const travel = () => setWorking(false);
-  const work = () => setWorking(true);
+  const work = () => {
+    setWorking(true);
+    
+  };
   const onChangeText = (payload) => setText(payload);
   const saveToDos = async (toSave) => {
     
@@ -85,8 +100,23 @@ const App: () => Node = () => {
   const loadToDos = async() => {
     const s= await AsyncStorage.getItem(STORAGE_KEY);
     setToDos(JSON.parse(s));
+    
   };  
- 
+
+  const checkWorking = () => {
+   AsyncStorage.setItem('@Working', JSON.stringify(working));
+  }
+  
+  const setCheck = async() => {
+    const s =  await AsyncStorage.getItem('@Working');
+    console.log(s);
+    if (s === "true") {
+      work();
+    } else {
+      travel();
+    }
+  }
+
   const deleteToDo = (key) => {
     console.log(key);
     Alert.alert("Delete", "Sure?", [
