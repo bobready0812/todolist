@@ -147,13 +147,9 @@ const App: () => Node = () => {
     setText("");
   };
 
-  const changeIsDone = () => {
-    if(isDone === false) {
-      setIsDone(true);
-    } else {
-      setIsDone(false);
-    }
-  }
+
+
+
 
   return (
   
@@ -178,8 +174,8 @@ const App: () => Node = () => {
         ></TextInput>
         <ScrollView>{
           Object.keys(toDos).map((key) => 
-          toDos[key].working === working ? (<View style={styles.toDo} key={key}>
-            <BouncyCheckbox size={20} fillColor="#339933" iconStyle={{borderColor : "#339933"}} unfillColor="#FFF" ></BouncyCheckbox>
+          toDos[key].working === working ? (<View style={toDos[key].isDone === false? styles.toDo : styles.toDo2} key={key}>
+            <BouncyCheckbox size={20} fillColor="#339933" iconStyle={{borderColor : "#339933"}}   unfillColor="#FFF" ></BouncyCheckbox>
             <Text style={styles.toDoText}>{toDos[key].text}</Text>
             <TouchableOpacity onPress={() => deleteToDo(key)}>
               <Text>❌</Text>
