@@ -148,8 +148,8 @@ const App: () => Node = () => {
   };
 
  const changeIsDone = async(key) => {
-   
-   
+   await 
+
    
   
  }
@@ -181,9 +181,8 @@ const App: () => Node = () => {
           Object.keys(toDos).map((key) => 
           toDos[key].working === working ? (<View style={ toDos[key].isDone === false? styles.toDo: styles.toDo2} key={key}>
             <BouncyCheckbox size={20} fillColor="#339933" iconStyle={{borderColor : "#339933"}}  
-            onPress={ () =>
-              changeIsDone(key)
-            }
+            onPress={ () => changeIsDone(key)
+              }
             unfillColor="#FFF" ></BouncyCheckbox>
             <Text style={styles.toDoText}>{toDos[key].text}</Text>
             <TouchableOpacity onPress={() => deleteToDo(key)}>
