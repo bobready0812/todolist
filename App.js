@@ -148,7 +148,10 @@ const App: () => Node = () => {
   };
 
  const changeIsDone = async(key) => {
-   await 
+  const s = JSON.parse(await AsyncStorage.getItem(STORAGE_KEY));
+  s[key].isDone = false;
+  await AsyncStorage.removeItem(STORAGE_KEY);
+  saveToDos(s);
 
    
   
