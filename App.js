@@ -82,7 +82,6 @@ const App: () => Node = () => {
     checkWorking();
   });
 
-  const [isDone, setIsDone] = useState(false);
   const [loadWork, setLoadWork] = useState({});
   const [working, setWorking] = useState(true);
   const [text, setText] = useState("");
@@ -141,7 +140,7 @@ const App: () => Node = () => {
     if(text === "") {
       return;
     } 
-    const newToDos = {...toDos, [Date.now()]: {text, working, isDone}};
+    const newToDos = {...toDos, [Date.now()]: {text, working}};
     setToDos(newToDos); 
     await saveToDos(newToDos);
     setText("");
@@ -168,18 +167,9 @@ const App: () => Node = () => {
         placeholder={working? "Add a To Do" : "Where Do You Want To Go?"} 
         style={styles.input}
         ></TextInput>
-        <ScrollView>{
-          Object.keys(toDos).map((key) => 
-          toDos[key].idDone === false ? (<View style={styles.toDo} key={key}>
-            <BouncyCheckbox size={20} fillColor="#339933" iconStyle={{borderColor : "#339933"}}  
-            unfillColor="#FFF" ></BouncyCheckbox>
-            <Text style={styles.toDoText}>{toDos[key].text}</Text>
-            <TouchableOpacity onPress={() => deleteToDo(key)}>
-              <Text>❌</Text>
-            </TouchableOpacity>
-          </View>
-          )  : null 
-          )}</ScrollView>
+       <ScrollView>{Object.keys(toDos).map((key) => (
+         <View></View>
+       ))}</ScrollView>
      </View>
    </View>
   );
