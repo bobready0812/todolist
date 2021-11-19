@@ -147,18 +147,6 @@ const App: () => Node = () => {
     setText("");
   };
 
- const changeIsDone = async(key) => {
-  const s = JSON.parse(await AsyncStorage.getItem(STORAGE_KEY));
-  s[key].isDone = false;
-  await AsyncStorage.removeItem(STORAGE_KEY);
-  saveToDos(s);
-
-   
-  
- }
-
-  
-
   return (
   
    <View style={styles.container}>
@@ -182,17 +170,15 @@ const App: () => Node = () => {
         ></TextInput>
         <ScrollView>{
           Object.keys(toDos).map((key) => 
-          toDos[key].working === working ? (<View style={ toDos[key].isDone === false? styles.toDo: styles.toDo2} key={key}>
+          toDos[key].idDone === false ? (<View style={styles.toDo} key={key}>
             <BouncyCheckbox size={20} fillColor="#339933" iconStyle={{borderColor : "#339933"}}  
-            onPress={ () => changeIsDone(key)
-              }
             unfillColor="#FFF" ></BouncyCheckbox>
             <Text style={styles.toDoText}>{toDos[key].text}</Text>
             <TouchableOpacity onPress={() => deleteToDo(key)}>
               <Text>❌</Text>
             </TouchableOpacity>
           </View>
-          )  : null
+          )  : null 
           )}</ScrollView>
      </View>
    </View>
